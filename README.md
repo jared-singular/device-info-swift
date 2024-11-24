@@ -98,3 +98,4 @@ The app provides two ways to verify collected data:
 - UIKit.framework
 
 ## License
+[See LICENSE](https://github.com/jared-singular/device-info-swift/blob/main/LICENSE)
