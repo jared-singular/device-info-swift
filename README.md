@@ -85,6 +85,14 @@ The app provides two ways to verify collected data:
 - Console output through printDeviceInfo()
 - Visual representation in the About View
 
+## Screenshots
+| About the App | DeviceInfo Dictionary |
+|----------|----------|
+| ![simulator_screenshot_26456FF5-08E3-498D-A001-89B1B3FA7370](https://github.com/user-attachments/assets/0dca0694-de9a-4703-a0cc-e72e36f90180)   | ![simulator_screenshot_5C2E2C17-4273-4F92-BC81-E6F05E449EF3](https://github.com/user-attachments/assets/518eba87-7588-4578-9b8a-eeadc3f3d5a7)   |
+
+
+
+
 ## Requirements
 
 - iOS 14.0+
