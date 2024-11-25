@@ -37,6 +37,7 @@ class DeviceInfo {
 **Device Identifiers**
 - `idfa`: Advertising identifier (IDFA) for user tracking
 - `idfv`: Vendor identifier (IDFV) as a fallback identifier
+- `deviceMake`: Physical device manufacture information
 - `deviceModel`: Physical device model information
 
 **System Details**
