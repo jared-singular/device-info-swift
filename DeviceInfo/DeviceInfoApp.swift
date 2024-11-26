@@ -55,6 +55,7 @@ struct DeviceInfoApp: App {
                             print("Device Info (excluding IDFA):")
                             print("IDFV: \(info["idfv"] ?? "")")
                             print("Locale: \(info["locale"] ?? "")")
+                            print("Device Make: \(info["deviceMake"] ?? "")")
                             print("Device Model: \(info["deviceModel"] ?? "")")
                             print("Build Version: \(info["buildVersion"] ?? "")")
                             break

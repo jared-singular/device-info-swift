@@ -36,6 +36,7 @@ struct DeviceInfoView: View {
                 Text("IDFA: \(deviceInfo.idfa)")
                 Text("IDFV: \(deviceInfo.idfv)")
                 Text("Locale: \(deviceInfo.locale)")
+                Text("Device Make: \(deviceInfo.deviceMake)")
                 Text("Device Model: \(deviceInfo.deviceModel)")
                 Text("Build Version: \(deviceInfo.buildVersion)")
                 Text("OS Version: \(deviceInfo.osVersion)")

@@ -63,6 +63,8 @@ class DeviceInfo {
         Locale.current.identifier
     }
     
+    var deviceMake = "Apple"
+    
     var deviceModel: String {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -91,6 +93,7 @@ class DeviceInfo {
             "idfa": idfa,
             "idfv": idfv,
             "locale": locale,
+            "deviceMake": deviceMake,
             "deviceModel": deviceModel,
             "buildVersion": buildVersion,
             "osVersion": osVersion
@@ -105,6 +108,7 @@ class DeviceInfo {
         print("IDFA: \(idfa)")
         print("IDFV: \(idfv)")
         print("Locale: \(locale)")
+        print("Device Make: \(deviceMake)")
         print("Device Model: \(deviceModel)")
         print("Build Version: \(buildVersion)")
         print("OS Version: \(osVersion)")
