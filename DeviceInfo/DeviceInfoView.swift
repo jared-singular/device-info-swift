@@ -11,6 +11,8 @@ import AppTrackingTransparency
 // DeviceInfoView.swift (Your existing view logic)
 struct DeviceInfoView: View {
     let deviceInfo = DeviceInfo.shared
+    let deviceIdentifiers = DeviceIdentifiers.shared
+    
     @State private var isDataRefreshed = false
     
     var body: some View {
@@ -32,9 +34,9 @@ struct DeviceInfoView: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text("BundleID: \(deviceInfo.bundleID)")
                 Text("App Version: \(deviceInfo.appVersion)")
-                Text("ATT Status: \(deviceInfo.attStatus)")
-                Text("IDFA: \(deviceInfo.idfa)")
-                Text("IDFV: \(deviceInfo.idfv)")
+                Text("ATT Status: \(deviceIdentifiers.attStatus)")
+                Text("IDFA: \(deviceIdentifiers.idfa)")
+                Text("IDFV: \(deviceIdentifiers.idfv)")
                 Text("Locale: \(deviceInfo.locale)")
                 Text("Device Make: \(deviceInfo.deviceMake)")
                 Text("Device Model: \(deviceInfo.deviceModel)")

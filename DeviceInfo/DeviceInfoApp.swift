@@ -17,6 +17,7 @@ struct DeviceInfoApp: App {
     
     // Initialize DeviceInfo
     let deviceInfo = DeviceInfo.shared
+    let deviceIdentifiers = DeviceIdentifiers.shared
     
     @Environment(\.scenePhase) var scenePhase
     
@@ -51,13 +52,8 @@ struct DeviceInfoApp: App {
                              .notDetermined,
                              .restricted:
                             // Still collect non-IDFA information
-                            let info = deviceInfo.getAllDeviceInfo()
-                            print("Device Info (excluding IDFA):")
-                            print("IDFV: \(info["idfv"] ?? "")")
-                            print("Locale: \(info["locale"] ?? "")")
-                            print("Device Make: \(info["deviceMake"] ?? "")")
-                            print("Device Model: \(info["deviceModel"] ?? "")")
-                            print("Build Version: \(info["buildVersion"] ?? "")")
+                            print(deviceInfo.printDeviceInfo())
+                            print(deviceIdentifiers.printIdentifiers())
                             break
                         @unknown default:
                             break
@@ -73,7 +69,7 @@ struct DeviceInfoApp: App {
                     case .active:
                         print("App Scene: active")
                         // Optionally refresh device info when app becomes active
-                        let info = deviceInfo.getAllDeviceInfo()
+                        let info = deviceIdentifiers.getAllIdentifiers()
                         print("Updated Device Info:", info)
                     @unknown default:
                         print("App Scene: unknown")

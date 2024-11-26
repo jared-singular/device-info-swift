@@ -7,63 +7,29 @@
 
 import Foundation
 import UIKit
-import AdSupport
 import Darwin
-import AppTrackingTransparency
 
 class DeviceInfo {
-    // Singleton instance
     static let shared = DeviceInfo()
-    
     private init() {}
     
     var appVersion: String {
-            return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
-    }
-    
-    var osVersion: String {
-            return UIDevice.current.systemVersion
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
     }
     
     var bundleID: String {
-            Bundle.main.bundleIdentifier ?? ""
-        }
-    
-    // Add this new property
-        var attStatus: String {
-            if #available(iOS 14, *) {
-                let status = ATTrackingManager.trackingAuthorizationStatus
-                switch status {
-                case .notDetermined:
-                    return "0"
-                case .restricted:
-                    return "1"
-                case .denied:
-                    return "2"
-                case .authorized:
-                    return "3"
-                @unknown default:
-                    return "unknown"
-                }
-            }
-            return "authorized"
-        }
-    
-    // Device Identifiers
-    var idfa: String {
-        ASIdentifierManager.shared().advertisingIdentifier.uuidString
+        Bundle.main.bundleIdentifier ?? ""
     }
     
-    var idfv: String {
-        UIDevice.current.identifierForVendor?.uuidString ?? ""
+    var osVersion: String {
+        UIDevice.current.systemVersion
     }
     
-    // System Information
     var locale: String {
         Locale.current.identifier
     }
     
-    var deviceMake = "Apple"
+    let deviceMake = "Apple"
     
     var deviceModel: String {
         var systemInfo = utsname()
@@ -84,14 +50,10 @@ class DeviceInfo {
         return "Build/\(rawBuild)"
     }
     
-    // Helper method to get all info at once
     func getAllDeviceInfo() -> [String: String] {
         return [
             "bundleID": bundleID,
             "appVersion": appVersion,
-            "attStatus": attStatus,
-            "idfa": idfa,
-            "idfv": idfv,
             "locale": locale,
             "deviceMake": deviceMake,
             "deviceModel": deviceModel,
@@ -100,13 +62,9 @@ class DeviceInfo {
         ]
     }
     
-    // Print all information
     func printDeviceInfo() {
         print("Bundle ID: \(bundleID)")
         print("App Version: \(appVersion)")
-        print("ATT Status: \(attStatus)")
-        print("IDFA: \(idfa)")
-        print("IDFV: \(idfv)")
         print("Locale: \(locale)")
         print("Device Make: \(deviceMake)")
         print("Device Model: \(deviceModel)")
