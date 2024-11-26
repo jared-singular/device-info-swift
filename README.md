@@ -1,110 +1,124 @@
-# device-info-swift
-Device Info Sample App in Swift
+# Device Info Swift Library
 
-# DeviceInfo App
+DeviceInfo Swift is a lightweight iOS utility that provides essential device data collection required for Singular Server-to-Server (S2S) REST API integration. The project consists of two main components that work together to gather crucial device information for maintaining device graphs and processing out-of-app events.
 
-A lightweight iOS utility for collecting essential device information required for Singular Server-to-Server REST API integration.
-
-## Overview
-
-DeviceInfo is a Swift-based singleton class that provides a centralized way to collect crucial iOS device data points. This information is essential for maintaining device graphs and processing out-of-app events through Singular's API.
-
-## Key Features
-
-- Singleton architecture for consistent device information access
-- Comprehensive device data collection
-- ATT (App Tracking Transparency) status tracking
-- System-level information gathering
-- Easy integration with server-side implementations
+TL;DR:
+- Swift utility classes for collecting iOS device data required for Singular S2S integration
+- Captures essential identifiers like IDFA, IDFV, and ATT status
+- Provides device information including model, OS version, and build details
+- Designed for maintaining device graphs and processing out-of-app events
 
 ## Core Components
+
+**DeviceIdentifiers Class**
+```swift
+class DeviceIdentifiers {
+    static let shared = DeviceIdentifiers()
+    
+    var attStatus: String
+    var idfa: String
+    var idfv: String
+    
+    func requestTrackingAuthorization(completion: @escaping (String) -> Void)
+    func getAllIdentifiers() -> [String: String]
+}
+```
 
 **DeviceInfo Class**
 ```swift
 class DeviceInfo {
     static let shared = DeviceInfo()
-    private init() {}
+    
+    var appVersion: String
+    var bundleID: String
+    var osVersion: String
+    var locale: String
+    var deviceModel: String
+    var buildVersion: String
+    
+    func getAllDeviceInfo() -> [String: String]
 }
 ```
 
-## Data Points Collected
-
-**App Information**
-- `appVersion`: Retrieves the current app version from the bundle
-- `bundleID`: Captures the application's bundle identifier
-- `buildVersion`: Obtains the system build version using sysctlbyname
+## Data Points
 
 **Device Identifiers**
-- `idfa`: Advertising identifier (IDFA) for user tracking
-- `idfv`: Vendor identifier (IDFV) as a fallback identifier
-- `deviceMake`: Physical device manufacture information
-- `deviceModel`: Physical device model information
+- `attStatus`: App Tracking Transparency status (iOS 14+)
+- `idfa`: Advertising identifier for user tracking
+- `idfv`: Vendor identifier as fallback identifier
 
-**System Details**
+**Device Information**
+- `appVersion`: Current app version from bundle
+- `bundleID`: Application bundle identifier
 - `osVersion`: Current iOS version
 - `locale`: Device's current locale setting
-- `attStatus`: App Tracking Transparency status (iOS 14+)
-
-## Usage
-
-**Retrieving All Device Information**
-```swift
-let deviceInfo = DeviceInfo.shared
-let allInfo = deviceInfo.getAllDeviceInfo()
-```
-
-**Debugging Output**
-```swift
-DeviceInfo.shared.printDeviceInfo()
-```
+- `deviceModel`: Physical device model information
+- `buildVersion`: System build version using sysctlbyname
 
 ## Implementation Guide
 
-1. Initialize the DeviceInfo singleton
-2. Collect device information using getAllDeviceInfo()
-3. Send the data to your server
-4. Store the information in your device graph
-5. Use the stored data points when sending event requests to Singular
+1. Initialize the components:
+```swift
+let deviceInfo = DeviceInfo.shared
+let deviceIdentifiers = DeviceIdentifiers.shared
+```
+
+2. Collect device information:
+```swift
+let deviceData = deviceInfo.getAllDeviceInfo()
+let identifierData = deviceIdentifiers.getAllIdentifiers()
+```
+
+3. Request ATT authorization when needed:
+```swift
+deviceIdentifiers.requestTrackingAuthorization { status in
+    // Handle ATT status
+}
+```
+
+## Server Integration
+
+### Device Graph Storage
+Store collected data points in your device graph with these key considerations:
+- Map multiple identifiers to a single user profile
+- Update data points periodically to maintain accuracy
+- Handle missing or null values gracefully
+
+### Singular API Integration
+When sending events to Singular's REST API:
+1. Retrieve stored device information from your device graph
+2. Include relevant device data in the API payload
+3. Ensure consistent identifier usage across events
+
+## Technical Requirements
+
+- iOS 14.0+
+- Swift 5.0+
+- Xcode 13.0+
+- Required frameworks:
+  - AdSupport.framework
+  - AppTrackingTransparency.framework
+  - UIKit.framework
 
 ## Best Practices
 
-- Store device information server-side for consistent tracking
+- Store collected information server-side for consistent tracking
 - Update device information periodically to maintain accuracy
 - Handle ATT status changes appropriately
 - Implement proper error handling for missing data points
+- Use the data points when sending event requests to Singular's API
 
-## Integration with Singular
-
-When sending Server-to-Server events:
-1. Retrieve stored device information from your device graph
-2. Include relevant device data points in your API requests
-3. Maintain data consistency across different events
-
-## Development and Debugging
+## Debugging
 
 The app provides two ways to verify collected data:
-- Console output through printDeviceInfo()
-- Visual representation in the About View
+- Xcode console output through printDeviceInfo()
+- Visual representation in the DeviceInfoView
 
 ## Screenshots
 | About the App | DeviceInfo Dictionary |
 |----------|----------|
 | ![simulator_screenshot_26456FF5-08E3-498D-A001-89B1B3FA7370](https://github.com/user-attachments/assets/0dca0694-de9a-4703-a0cc-e72e36f90180)   | ![simulator_screenshot_5C2E2C17-4273-4F92-BC81-E6F05E449EF3](https://github.com/user-attachments/assets/518eba87-7588-4578-9b8a-eeadc3f3d5a7)   |
 
-
-
-
-## Requirements
-
-- iOS 14.0+
-- Swift 5.0+
-- Xcode 13.0+
-
-## Dependencies
-
-- AdSupport.framework
-- AppTrackingTransparency.framework
-- UIKit.framework
 
 ## License
 [See LICENSE](https://github.com/jared-singular/device-info-swift/blob/main/LICENSE)
